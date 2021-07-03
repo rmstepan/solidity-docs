@@ -171,7 +171,7 @@ contract B {
 Imagine the following actors: Alice, Bob and Rick:
 - When Alice does `CALL` on Rick, the code runs in the context of Rick: the storage of Rick is used
 - When Alice does `CALLCODE` on Rick, the code runs in the context of Alice: the storage of Alice is used.
-- When Alice invokes Bob and Bob does `DELEGATECALL` on Rick, the code runs in the context of the initiator which is Alice.
+- When Alice invokes Bob and Bob does `DELEGATECALL` on Rick, the code runs in the context Bob, but msg.sender is preserved from the initiator which is Alice.
 
 ### Array
 
@@ -438,6 +438,16 @@ function() {
   // Do something
 }
 ```
+
+A contract can have at most one fallback function, declared using either
+ -  `fallback () external [payable]`
+ - `fallback (bytes calldata _input) external [payable] returns (bytes memory _output)`
+ - `function () ` - deprecated
+### Receive Ether function
+A contract can have at most one `receive` function, declared using `receive() external payable { ... }` **(without the function keyword)**. This function cannot have arguments, cannot return anything and must have external visibility and payable state mutability. It can be virtual, can override and can have modifiers.
+
+The receive function is executed on a call to the contract with empty calldata. This is the function that is executed on plain Ether transfers (e.g. via .send() or .transfer()). If no such function exists, but a payable fallback function exists, the fallback function will be called on a plain Ether transfer. If neither a receive Ether nor a payable fallback function is present, the contract cannot receive Ether through regular transactions and throws an exception.
+
 
 ## Contracts
 
