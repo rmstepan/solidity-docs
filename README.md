@@ -1,7 +1,7 @@
 # Solidity Cheatsheet and Best practices
 
 - Check also:
-  * [Solidity Security guidelines and practices](/solidity-security)
+  * [Solidity Security guidelines and practices](solidity-docs/solidity-security)
 
 ## Motivation
 
