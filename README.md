@@ -1,5 +1,8 @@
 # Solidity Cheatsheet and Best practices
 
+- Check also:
+  * [Solidity Security guidelines and practices](/solidity-security)
+
 ## Motivation
 
 This document is a cheatsheet for **Solidity** that you can use to write **Smart Contracts** for **Ethereum** based blockchain.
@@ -25,7 +28,7 @@ This guide is not intended to teach you Solidity from the ground up, but to help
       - [call](#call)
       - [delegatecall](#delegatecall)
       - [callcode](#callcode)
-      - [Differences between call/callcode/delegatecall](#Differences-between-CALL,-CALLCODE-and-DELEGATECODE:)
+      - [Differences between call/callcode/delegatecall](#differences-between-call,-callcode-and-delegatecode:)
     + [Array](#array)
     + [Fixed byte arrays](#fixed-byte-arrays)
     + [Dynamic byte arrays](#dynamic-byte-arrays)
@@ -51,6 +54,7 @@ This guide is not intended to teach you Solidity from the ground up, but to help
     + [Pure Functions](#pure-functions)
     + [Payable Functions](#payable-functions)
     + [Fallback Function](#fallback-function)
+    + [Receive Ether Function](#receive-ether-function)
   * [Contracts](#contracts)
     + [Creating contracts using `new`](#creating-contracts-using--new-)
     + [Contract Inheritance](#contract-inheritance)
@@ -443,7 +447,10 @@ A contract can have at most one fallback function, declared using either
  -  `fallback () external [payable]`
  - `fallback (bytes calldata _input) external [payable] returns (bytes memory _output)`
  - `function () ` - deprecated
+
+
 ### Receive Ether function
+
 A contract can have at most one `receive` function, declared using `receive() external payable { ... }` **(without the function keyword)**. This function cannot have arguments, cannot return anything and must have external visibility and payable state mutability. It can be virtual, can override and can have modifiers.
 
 The receive function is executed on a call to the contract with empty calldata. This is the function that is executed on plain Ether transfers (e.g. via .send() or .transfer()). If no such function exists, but a payable fallback function exists, the fallback function will be called on a plain Ether transfer. If neither a receive Ether nor a payable fallback function is present, the contract cannot receive Ether through regular transactions and throws an exception.
