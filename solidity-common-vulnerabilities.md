@@ -69,7 +69,7 @@ contract Exploiter {
     }
     
     modifier onlyOwner {
-        require(msg.sender == owner, "Only owner: operation not allowed);
+        require(msg.sender == owner, "Only owner: operation not allowed");
         _;
     }
     
