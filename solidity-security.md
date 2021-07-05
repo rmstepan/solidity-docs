@@ -1,5 +1,3 @@
-### WIP Version. Pending review. Use with caution
-
 # Solidity security guidelines & Best practices
 
 Solidity cheatsheet is available in [solidity-cheatsheet](/README.md).
@@ -34,7 +32,7 @@ Some functions will return false if it fails. Make sure to handle the possibilit
 
 `call`, `callcode`, `delegatecall`, `send` are some functions that return `false` on failure.
 
-```
+```solidity
 // BAD
 <address>.send(10);
 
