@@ -23,6 +23,7 @@ Computer scientists say that a procedure is re-entrant if its execution can be i
 The most famous example of this was the DAO Hack, where $70million worth of Ether was siphoned off.
 
 ### Reentrancy example
+(example from [Ethernaut](https://ethernaut.openzeppelin.com))
 ```solidity
 pragma solidity ^0.6.0;
 
@@ -94,5 +95,42 @@ contract Exploiter {
 ```
 ### How to prevent Reentrancy attacks:
 
+Use the [Openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts)'s ReentrancyGuard to block reentrant calls to your functions.
 
+Example: (using the reentrancy guard for the vulnerable contract from above)
+
+```solidity
+pragma solidity ^0.6.0;
+
+import '@openzeppelin/contracts/math/SafeMath.sol';
+import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+
+contract Reentrance is ReentrancyGuard{
+  
+  using SafeMath for uint256;
+  mapping(address => uint) public balances;
+
+  function donate(address _to) public payable {
+    balances[_to] = balances[_to].add(msg.value);
+  }
+
+  function balanceOf(address _who) public view returns (uint balance) {
+    return balances[_who];
+  }
+
+  function withdraw(uint _amount) public nonReentrant{
+    if(balances[msg.sender] >= _amount) {
+      (bool result, bytes memory data) = msg.sender.call.value(_amount)("");
+      if(result) {
+        _amount;
+      }
+      balances[msg.sender] -= _amount;
+    }
+  }
+
+  fallback() external payable {}
+}
+```
+
+Notice the inheritance `contract Reentrancy is ReentrancyGuard` and function definition `function withdraw(uint _amount) public nonReentrant`.
 
