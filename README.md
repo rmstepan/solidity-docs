@@ -3,7 +3,7 @@
 - Check also:
   * [Solidity Security guidelines and practices](https://rmstepan.github.io/solidity-docs/solidity-security)
   * [Common vulnerabilities in Ethereum and EVM-based chains](https://rmstepan.github.io/solidity-docs/solidity-common-vulnerabilities)
-  * [Gas optimization](https://rmstepan.github.io/solidity-docs/tbd)
+  * [Gas optimization](https://rmstepan.github.io/solidity-docs/gas-optimization.md)
 
 ## Motivation
 

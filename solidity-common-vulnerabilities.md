@@ -11,6 +11,8 @@ Solidity cheatsheet is available in [solidity-cheatsheet](/README.md).
     + [Examples](#reentrancy-example)
     + [How to prevent reentrancy attacks](#how-to-prevent-reentrancy-attacks)
   * [Arithmetic overflows and underflows](#arithmetic-overflows-and-underflows)
+    + [Underflow example](#underflow-example)
+    + [Overflow and underflow protection](#overflow-and-underflow-protection)
 
 ### Motivation
 
