@@ -16,7 +16,7 @@ Solidity cheatsheet is available in [solidity-cheatsheet](/README.md).
 
 ### Motivation
 
-TBD
+With the recent increase in cryptocurrency prices, new attack vectors with increasing complexity are discovered. We as developers should be aware of the common EVM vulnerabilities and try as much as possible to mitigate them.
 
 ### Reentrancy
 
