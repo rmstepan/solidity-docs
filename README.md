@@ -1,9 +1,9 @@
 # Solidity Cheatsheet and Best practices
 
 - Check also:
-  * [Solidity Security guidelines and practices](https://rmstepan.github.io/solidity-docs/solidity-security)
-  * [Common vulnerabilities in Ethereum and EVM-based chains](https://rmstepan.github.io/solidity-docs/solidity-common-vulnerabilities)
-  * [Gas optimization](https://rmstepan.github.io/solidity-docs/gas-optimization)
+  - [Solidity Security guidelines and practices](https://rmstepan.github.io/solidity-docs/solidity-security)
+  - [Common vulnerabilities in Ethereum and EVM-based chains](https://rmstepan.github.io/solidity-docs/solidity-common-vulnerabilities)
+  - [Gas optimization](https://rmstepan.github.io/solidity-docs/gas-optimization)
 
 ## Motivation
 
@@ -13,72 +13,70 @@ This guide is not intended to teach you Solidity from the ground up, but to help
 
 > **Note:** If you have basic knowledge in JavaScript, it's easier to learn Solidity.
 
-
 ## Table of contents
 
 - [Solidity Cheatsheet and Best practices](#solidity-cheatsheet-and-best-practices)
-  * [Motivation](#motivation)
-  * [Table of contents](#table-of-contents)
-  * [Version pragma](#version-pragma)
-  * [Import files](#import-files)
-  * [Types](#types)
-    + [Boolean](#boolean)
-    + [Integer](#integer)
-    + [Address](#address)
+  - [Motivation](#motivation)
+  - [Table of contents](#table-of-contents)
+  - [Version pragma](#version-pragma)
+  - [Import files](#import-files)
+  - [Types](#types)
+    - [Boolean](#boolean)
+    - [Integer](#integer)
+    - [Address](#address)
       - [balance](#balance)
       - [transfer and send](#transfer-and-send)
       - [call](#call)
       - [delegatecall](#delegatecall)
       - [callcode](#callcode)
       - [Differences between call/callcode/delegatecall](#differences-between-call,-callcode-and-delegatecode:)
-    + [Array](#array)
-    + [Fixed byte arrays](#fixed-byte-arrays)
-    + [Dynamic byte arrays](#dynamic-byte-arrays)
-    + [Enum](#enum)
-    + [Struct](#struct)
-    + [Mapping](#mapping)
-  * [Control Structures](#control-structures)
-  * [Functions](#functions)
-    + [Structure](#structure)
-    + [Access modifiers](#access-modifiers)
-    + [Parameters](#parameters)
+    - [Array](#array)
+    - [Fixed byte arrays](#fixed-byte-arrays)
+    - [Dynamic byte arrays](#dynamic-byte-arrays)
+    - [Enum](#enum)
+    - [Struct](#struct)
+    - [Mapping](#mapping)
+  - [Control Structures](#control-structures)
+  - [Functions](#functions)
+    - [Structure](#structure)
+    - [Access modifiers](#access-modifiers)
+    - [Parameters](#parameters)
       - [Input parameters](#input-parameters)
       - [Output parameters](#output-parameters)
-    + [Constructor](#constructor)
-    + [Function Calls](#function-calls)
+    - [Constructor](#constructor)
+    - [Function Calls](#function-calls)
       - [Internal Function Calls](#internal-function-calls)
       - [External Function Calls](#external-function-calls)
       - [Named Calls](#named-calls)
       - [Unnamed function parameters](#unnamed-function-parameters)
-    + [Function type](#function-type)
-    + [Function Modifier](#function-modifier)
-    + [View or Constant Functions](#view-or-constant-functions)
-    + [Pure Functions](#pure-functions)
-    + [Payable Functions](#payable-functions)
-    + [Fallback Function](#fallback-function)
-    + [Receive Ether Function](#receive-ether-function)
-  * [Contracts](#contracts)
-    + [Creating contracts using `new`](#creating-contracts-using--new-)
-    + [Contract Inheritance](#contract-inheritance)
+    - [Function type](#function-type)
+    - [Function Modifier](#function-modifier)
+    - [View or Constant Functions](#view-or-constant-functions)
+    - [Pure Functions](#pure-functions)
+    - [Payable Functions](#payable-functions)
+    - [Fallback Function](#fallback-function)
+    - [Receive Ether Function](#receive-ether-function)
+  - [Contracts](#contracts)
+    - [Creating contracts using `new`](#creating-contracts-using--new-)
+    - [Contract Inheritance](#contract-inheritance)
       - [Multiple inheritance](#multiple-inheritance)
       - [Constructor of base class](#constructor-of-base-class)
-    + [Abstract Contracts](#abstract-contracts)
-  * [Interface](#interface)
-  * [Events](#events)
-  * [Library](#library)
-  * [Using - For](#using---for)
-  * [Error Handling](#error-handling)
-  * [Global variables](#global-variables)
-    + [Block variables](#block-variables)
-    + [Transaction variables](#transaction-variables)
-    + [Mathematical and Cryptographic Functions](#mathematical-and-cryptographic-functions)
-    + [Contract Related](#contract-related)
-
+    - [Abstract Contracts](#abstract-contracts)
+  - [Interface](#interface)
+  - [Events](#events)
+  - [Library](#library)
+  - [Using - For](#using---for)
+  - [Error Handling](#error-handling)
+  - [Global variables](#global-variables)
+    - [Block variables](#block-variables)
+    - [Transaction variables](#transaction-variables)
+    - [Mathematical and Cryptographic Functions](#mathematical-and-cryptographic-functions)
+    - [Contract Related](#contract-related)
+  * [Selector computation](#selector-computation)
 
 ## Version pragma
 
-`pragma solidity ^0.5.2;`  will compile with a compiler version  >= 0.5.2 and < 0.6.0.
-
+`pragma solidity ^0.5.2;` will compile with a compiler version >= 0.5.2 and < 0.6.0.
 
 ## Import files
 
@@ -87,7 +85,6 @@ This guide is not intended to teach you Solidity from the ground up, but to help
 `import * as symbolName from "filename";` or `import "filename" as symbolName;`
 
 `import {symbol1 as alias, symbol2} from "filename";`
-
 
 ## Types
 
@@ -104,7 +101,7 @@ Operators:
 
 Unsigned : `uint8 | uint16 | uint32 | uint64 | uint128 | uint256(uint)`
 
-Signed   : `int8  | int16  | int32  | int64  | int128  | int256(int) `
+Signed : `int8 | int16 | int32 | int64 | int128 | int256(int) `
 
 Operators:
 
@@ -133,6 +130,7 @@ Methods:
 - `<address>.send(uint256 amount) returns (bool)`: send given amount of Wei to Address, returns false on failure
 
 #### call
+
 - `<address>.call(...) returns (bool)`: issue low-level CALL, returns false on failure
 
 #### delegatecall
@@ -168,6 +166,7 @@ contract B {
 > gas() option is available for call, callcode and delegatecall. value() option is not supported for delegatecall.
 
 #### callcode
+
 - `<address>.callcode(...) returns (bool)`: issue low-level CALLCODE, returns false on failure
 
 > Prior to homestead, only a limited variant called `callcode` was available that did not provide access to the original `msg.sender` and `msg.value` values.
@@ -175,6 +174,7 @@ contract B {
 #### Differences between CALL, CALLCODE and DELEGATECODE:
 
 Imagine the following actors: Alice, Bob and Rick:
+
 - When Alice does `CALL` on Rick, the code runs in the context of Rick: the storage of Rick is used
 - When Alice does `CALLCODE` on Rick, the code runs in the context of Alice: the storage of Alice is used.
 - When Alice invokes Bob and Bob does `DELEGATECALL` on Rick, the code runs in the context Bob, but msg.sender is preserved from the initiator which is Alice.
@@ -214,11 +214,11 @@ Members
 Enum works just like in every other language.
 
 ```solidity
-enum ActionChoices { 
-  GoLeft, 
-  GoRight, 
-  GoStraight, 
-  SitStill 
+enum ActionChoices {
+  GoLeft,
+  GoRight,
+  GoStraight,
+  SitStill
 }
 
 ActionChoices choice = ActionChoices.GoStraight;
@@ -245,10 +245,9 @@ Mappings can be seen as **hash tables** which are virtually initialized such tha
 
 **key** can be almost any type except for a mapping, a dynamically sized array, a contract, an enum, or a struct. **value** can actually be any type, including mappings.
 
-
 ## Control Structures
 
-Most of the control structures from JavaScript are available in Solidity except for `switch` and `goto`. 
+Most of the control structures from JavaScript are available in Solidity except for `switch` and `goto`.
 
 - `if` `else`
 - `while`
@@ -267,10 +266,10 @@ Most of the control structures from JavaScript are available in Solidity except 
 
 ### Access modifiers
 
-- ```public``` - Accessible from this contract, inherited contracts and externally
-- ```private``` - Accessible only from this contract
-- ```internal``` - Accessible only from this contract and contracts inheriting from it
-- ```external``` - Cannot be accessed internally, only externally. Recommended to reduce gas. Access internally with `this.f`.
+- `public` - Accessible from this contract, inherited contracts and externally
+- `private` - Accessible only from this contract
+- `internal` - Accessible only from this contract and contracts inheriting from it
+- `external` - Cannot be accessed internally, only externally. Recommended to reduce gas. Access internally with `this.f`.
 
 ### Parameters
 
@@ -296,7 +295,6 @@ Output can also be specified using `return` statement. In that case, we can omit
 
 Multiple return types are possible with `return (v0, v1, ..., vn)`.
 
-
 ### Constructor
 
 Function that is executed during contract deployment. Defined using the `constructor` keyword.
@@ -320,12 +318,12 @@ Functions of the current contract can be called directly (internally - via jumps
 
 ```solidity
 contract C {
-    function funA() returns (uint) { 
-       return 5; 
+    function funA() returns (uint) {
+       return 5;
     }
-    
-    function FunB(uint _a) returns (uint ret) { 
-       return funA() + _a; 
+
+    function FunB(uint _a) returns (uint ret) {
+       return funA() + _a;
     }
 }
 ```
@@ -393,7 +391,6 @@ contract OracleUser {
 }
 ```
 
-
 ### Function Modifier
 
 Modifiers can automatically check a condition prior to executing the function.
@@ -446,17 +443,16 @@ function() {
 ```
 
 A contract can have at most one fallback function, declared using either
- -  `fallback () external [payable]`
- - `fallback (bytes calldata _input) external [payable] returns (bytes memory _output)`
- - `function () ` - deprecated
 
+- `fallback () external [payable]`
+- `fallback (bytes calldata _input) external [payable] returns (bytes memory _output)`
+- `function () ` - deprecated
 
 ### Receive Ether function
 
 A contract can have at most one `receive` function, declared using `receive() external payable { ... }` **(without the function keyword)**. This function cannot have arguments, cannot return anything and must have external visibility and payable state mutability. It can be virtual, can override and can have modifiers.
 
 The receive function is executed on a call to the contract with empty calldata. This is the function that is executed on plain Ether transfers (e.g. via .send() or .transfer()). If no such function exists, but a payable fallback function exists, the fallback function will be called on a plain Ether transfer. If neither a receive Ether nor a payable fallback function is present, the contract cannot receive Ether through regular transactions and throws an exception.
-
 
 ## Contracts
 
@@ -496,7 +492,7 @@ contract mortal is owned {
 }
 
 contract final is mortal {
-    function kill() { 
+    function kill() {
         super.kill(); // Calls kill() of mortal.
     }
 }
@@ -523,7 +519,6 @@ contract B is A(1) {
     }
 }
 ```
-
 
 ### Abstract Contracts
 
@@ -586,7 +581,7 @@ contract ClientReceipt {
 
 ## Library
 
-Libraries are similar to contracts, but they are deployed only once at a specific address, and their code is used with [`delegatecall`](#delegatecall) (`callcode`). 
+Libraries are similar to contracts, but they are deployed only once at a specific address, and their code is used with [`delegatecall`](#delegatecall) (`callcode`).
 
 ```solidity
 library arithmatic {
@@ -617,7 +612,7 @@ library arithmatic {
 
 contract C {
     using arithmatic for uint;
-    
+
     uint sum;
     function f(uint _a) {
         sum = _a.add(3);
@@ -668,22 +663,43 @@ contract C {
 ### Mathematical and Cryptographic Functions
 
 - `addmod(uint x, uint y, uint k) returns (uint)`:
-   compute (x + y) % k where the addition is performed with arbitrary precision and does not wrap around at 2**256.
+  compute (x + y) % k where the addition is performed with arbitrary precision and does not wrap around at 2\*\*256.
 - `mulmod(uint x, uint y, uint k) returns (uint)`:
-   compute (x * y) % k where the multiplication is performed with arbitrary precision and does not wrap around at 2**256.
+  compute (x \* y) % k where the multiplication is performed with arbitrary precision and does not wrap around at 2\*\*256.
 - `keccak256(...) returns (bytes32)`:
-   compute the Ethereum-SHA-3 (Keccak-256) hash of the (tightly packed) arguments
+  compute the Ethereum-SHA-3 (Keccak-256) hash of the (tightly packed) arguments
 - `sha256(...) returns (bytes32)`:
-   compute the SHA-256 hash of the (tightly packed) arguments
+  compute the SHA-256 hash of the (tightly packed) arguments
 - `sha3(...) returns (bytes32)`:
-   alias to keccak256
+  alias to keccak256
 - `ripemd160(...) returns (bytes20)`:
-   compute RIPEMD-160 hash of the (tightly packed) arguments
+  compute RIPEMD-160 hash of the (tightly packed) arguments
 - `ecrecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) returns (address)`:
-   recover the address associated with the public key from elliptic curve signature or return zero on error (example usage)
-   
+  recover the address associated with the public key from elliptic curve signature or return zero on error (example usage)
+
 ### Contract Related
+
 - `this (current contract’s type)`: the current contract, explicitly convertible to Address
 - `selfdestruct(address recipient)`: destroy the current contract, sending its funds to the given Address
 - `suicide(address recipient)`: alias to selfdestruct. Soon to be deprecated.
 
+### Selector computation
+
+- The function selector is the first 4 bytes of calldata and it specifies which function to call
+- Computed by taking the first 4 bytes of the keccak256 hash of the function signature
+- e.g. :
+
+```solidity
+function swap(address _t1, address _t2, uint _q) external {}
+// keccak256("swap(address,address,uint256)") -> 0xdf791e50
+
+function distributeTokens(address[] memory _addr, uint256 _amount) external {}
+// keccak256("distributeTokens(address[],uint256)") -> 0x256fa241
+
+struct CoolStruct {
+  uint _uintData;
+  address[] _addrData;
+}
+function getCoolStructs(CoolStruct[] memory _structs, uint _u) external {}
+// keccak256("getCoolStructs((uint256,address[])[],uint256)") -> 0x68edeca1
+```
